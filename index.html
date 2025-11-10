@@ -1,17 +1,598 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Tattva - The Water Story | Infused Water Wellness & Hydration Tracker</title>
-    <meta name="description" content="Discover 100+ fruit and herb infused water recipes. Track your daily hydration with personalized goals, get health benefits, and shop premium Tattva water bottles." />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fira+Code:wght@300..700&family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&family=Oxanium:wght@200..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Switch } from "@/components/ui/switch";
+import { Slider } from "@/components/ui/slider";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
+import { Progress } from "@/components/ui/progress";
+import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
+import { Droplets, Flame, Leaf, Bell, FlaskConical, Hourglass, Brain, Heart, Star, TestTubeDiagonal, Beaker, Clock, CheckCircle2, Info } from "lucide-react";
+
+// ---------- Helpers ----------
+const COLORS = ["#00bcd4", "#2196f3", "#4caf50", "#ff9800", "#795548"]; // water, air, earth, fire, space vibe
+const STORAGE_KEYS = {
+  goal: "tattava_goal_ml",
+  logs: "tattava_logs",
+  remind: "tattava_remind_on",
+  remindEvery: "tattava_remind_every",
+  tattva: "tattava_mix",
+};
+const ml = (n) => `${n} ml`;
+
+const baseInfusions = [
+  {
+    id: "lemon-mint",
+    name: "Lemon + Mint",
+    tags: ["Detox", "Bloat relief", "Vitamin C"],
+    when: "Morning, post-meal",
+    method: "4 lemon slices + 8 mint leaves in 1L cool water; infuse 30–45 min.",
+    cautions: "Avoid if severe GERD or citrus sensitivity.",
+    benefits: "Hydration boost, supports bile flow, light digestive aid.",
+    elements: { water: 30, air: 15, earth: 10, fire: 25, space: 20 },
+  },
+  {
+    id: "tulsi-ginger",
+    name: "Tulsi + Ginger",
+    tags: ["Immune", "Anti-nausea", "Warmth"],
+    when: "Rainy days, travel, morning sip",
+    method: "6 tulsi leaves + 6 ginger slices in 750 ml warm water; infuse 20 min.",
+    cautions: "Limit in first trimester, watch if on anticoagulants.",
+    benefits: "Soothes throat, eases nausea, warms digestion.",
+    elements: { water: 15, air: 10, earth: 10, fire: 45, space: 20 },
+  },
+  {
+    id: "cinnamon-fennel",
+    name: "Cinnamon + Fennel",
+    tags: ["Metabolic", "Sugar balance", "After meals"],
+    when: "After heavy meals",
+    method: "1 small stick cinnamon + 1 tsp lightly crushed fennel in 1L warm water; infuse 30 min.",
+    cautions: "Moderate if on hypoglycemics; avoid excess in pregnancy.",
+    benefits: "Supports post‑meal glucose and eases heaviness.",
+    elements: { water: 20, air: 10, earth: 20, fire: 35, space: 15 },
+  },
+  {
+    id: "kokum-cumin",
+    name: "Kokum + Cumin",
+    tags: ["Cooling", "Acidity relief", "Electrolytes"],
+    when: "Hot days, after spicy food",
+    method: "3 kokum petals (soaked) + 1/2 tsp roasted cumin crushed in 1L cool water; infuse 45 min.",
+    cautions: "Watch if hypotensive; kokum is sour.",
+    benefits: "Cools Pitta, calms reflux, light electrolyte support.",
+    elements: { water: 35, air: 10, earth: 15, fire: 15, space: 25 },
+  },
+  {
+    id: "cucumber-hibiscus",
+    name: "Cucumber + Hibiscus",
+    tags: ["BP friendly", "Skin glow", "Antioxidant"],
+    when: "Afternoon",
+    method: "8 cucumber rounds + 2 dried hibiscus petals in 1L cool water; infuse 30–45 min.",
+    cautions: "Hibiscus may lower BP; avoid with low BP.",
+    benefits: "Gentle diuretic, skin hydration, anthocyanins.",
+    elements: { water: 40, air: 10, earth: 20, fire: 10, space: 20 },
+  },
+  {
+    id: "jeera-ajwain",
+    name: "Jeera + Ajwain",
+    tags: ["Bloat", "Gas relief", "Post‑meal"],
+    when: "Post‑meal, travel",
+    method: "1/2 tsp jeera + 1/4 tsp ajwain lightly crushed; steep in 800 ml warm water for 15–20 min.",
+    cautions: "Strong taste; reduce if mouth dryness.",
+    benefits: "Relieves gas, enhances motility.",
+    elements: { water: 20, air: 20, earth: 15, fire: 35, space: 10 },
+  },
+];
+
+const defaultTattva = { water: 35, air: 15, earth: 20, fire: 20, space: 10 }; // baseline proportions (sum 100)
+
+function useLocalStorage(key, initial) {
+  const [value, setValue] = useState(() => {
+    try {
+      const raw = localStorage.getItem(key);
+      return raw ? JSON.parse(raw) : initial;
+    } catch {
+      return initial;
+    }
+  });
+  useEffect(() => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch {}
+  }, [key, value]);
+  return [value, setValue];
+}
+
+function Header() {
+  return (
+    <div className="w-full sticky top-0 z-30 backdrop-blur bg-white/70 border-b">
+      <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-3">
+          <Droplets className="w-6 h-6" />
+          <div>
+            <h1 className="text-xl font-semibold tracking-tight">Tattava – The Water Story</h1>
+            <p className="text-xs text-muted-foreground -mt-0.5">Hydrate with purpose • Heal with balance</p>
+          </div>
+        </motion.div>
+        <div className="hidden md:flex items-center gap-2">
+          <Badge variant="outline" className="rounded-2xl">#WaterWisdom</Badge>
+          <Badge variant="outline" className="rounded-2xl">#InfuseToImprove</Badge>
+          <Badge variant="outline" className="rounded-2xl">#Panchatattva</Badge>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LearnPanel() {
+  const bullets = [
+    { icon: <Flame className="w-4 h-4" />, title: "Fire (Agni)", text: "Transforms – metabolism, warmth, digestion." },
+    { icon: <Droplets className="w-4 h-4" />, title: "Water (Jal)", text: "Flows – hydration, lymph, skin glow." },
+    { icon: <Leaf className="w-4 h-4" />, title: "Earth (Prithvi)", text: "Builds – stability, joints, tissues." },
+    { icon: <Brain className="w-4 h-4" />, title: "Air (Vayu)", text: "Moves – breath, circulation, nerve tone." },
+    { icon: <Hourglass className="w-4 h-4" />, title: "Space (Akasha)", text: "Holds – calm, clarity, lightness." },
+  ];
+  return (
+    <div className="grid md:grid-cols-3 gap-4">
+      <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle>Why water – and why infused?</CardTitle>
+        </CardHeader>
+        <CardContent className="text-sm leading-relaxed space-y-3">
+          <p>
+            Tattava blends science and traditional wisdom: the right water, infused with targeted botanicals, supports your body’s
+            natural rhythms. Choose infusions by season, symptom, and goal; track your intake; and balance the five elements.
+          </p>
+          <ul className="list-disc pl-5 space-y-1">
+            <li>Hydration is not just volume – it’s timing, temperature, and trace phytonutrients.</li>
+            <li>Infusions are gentle, food‑grade strategies – not substitutes for medical care.</li>
+            <li>Our AI heuristics suggest balanced mixes; you can fine‑tune by listening to your body.</li>
+          </ul>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2"><Info className="w-5 h-5" /> Safety</CardTitle>
+        </CardHeader>
+        <CardContent className="text-sm space-y-2">
+          <p>Pregnant, nursing, or on medication? Consult your clinician before strong herbs/spices. Start mild; observe your body.</p>
+          <p>Avoid infusions that aggravate reflux, allergies, or interact with medicines. Hydration complements, not replaces, therapy.</p>
+        </CardContent>
+      </Card>
+      <Card className="md:col-span-3">
+        <CardHeader>
+          <CardTitle>Panchatattva – the five forces at a glance</CardTitle>
+        </CardHeader>
+        <CardContent className="grid md:grid-cols-5 gap-4 text-sm">
+          {bullets.map((b, i) => (
+            <div key={i} className="p-3 rounded-xl border">
+              <div className="flex items-center gap-2 font-medium">{b.icon}{b.title}</div>
+              <p className="mt-1 text-muted-foreground">{b.text}</p>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function TrackerPanel() {
+  const [goal, setGoal] = useLocalStorage(STORAGE_KEYS.goal, 2500);
+  const [logs, setLogs] = useLocalStorage(STORAGE_KEYS.logs, []);
+  const [amount, setAmount] = useState(250);
+  const [type, setType] = useState("Plain water");
+  const [remind, setRemind] = useLocalStorage(STORAGE_KEYS.remind, false);
+  const [remindEvery, setRemindEvery] = useLocalStorage(STORAGE_KEYS.remindEvery, 90);
+  const timerRef = useRef(null);
+
+  const consumed = useMemo(() => logs.reduce((s, l) => s + l.ml, 0), [logs]);
+  const progress = Math.min(100, Math.round((consumed / goal) * 100));
+
+  useEffect(() => {
+    if (!remind) { if (timerRef.current) { clearInterval(timerRef.current); } return; }
+    const minutes = Math.max(15, Number(remindEvery) || 90);
+    timerRef.current = setInterval(async () => {
+      if ("Notification" in window) {
+        try {
+          if (Notification.permission === "granted") {
+            new Notification("Hydration reminder", { body: "Time for a few sips of water 💧" });
+          } else if (Notification.permission !== "denied") {
+            await Notification.requestPermission();
+          }
+        } catch {}
+      }
+      // Fallback
+      alert("Hydration reminder: take 3–4 mindful sips 💧");
+    }, minutes * 60 * 1000);
+    return () => clearInterval(timerRef.current);
+  }, [remind, remindEvery]);
+
+  const addLog = () => {
+    const entry = { ml: Number(amount), type, t: new Date().toISOString() };
+    setLogs([entry, ...logs].slice(0, 100));
+  };
+  const resetDay = () => setLogs([]);
+
+  const daySeries = useMemo(() => {
+    // Aggregate by hour label
+    const byHour = {};
+    logs.slice().reverse().forEach((l) => {
+      const d = new Date(l.t);
+      const key = `${d.getHours().toString().padStart(2, "0")}:00`;
+      byHour[key] = (byHour[key] || 0) + l.ml;
+    });
+    return Object.entries(byHour).map(([k, v]) => ({ time: k, ml: v }));
+  }, [logs]);
+
+  return (
+    <div className="grid md:grid-cols-3 gap-4">
+      <Card className="md:col-span-2">
+        <CardHeader>
+          <CardTitle>Water intake tracker</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="text-sm text-muted-foreground">Today’s goal</div>
+                  <div className="text-2xl font-semibold">{ml(goal)}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm text-muted-foreground">Consumed</div>
+                  <div className="text-2xl font-semibold">{ml(consumed)}</div>
+                </div>
+              </div>
+              <Progress value={progress} />
+              <div className="text-xs text-muted-foreground">{progress}% of goal</div>
+              <div className="grid grid-cols-2 gap-3 items-end">
+                <div>
+                  <Label className="text-xs">Add amount (ml)</Label>
+                  <Input type="number" value={amount} onChange={(e) => setAmount(e.target.value)} />
+                </div>
+                <div>
+                  <Label className="text-xs">Type</Label>
+                  <Select value={type} onValueChange={setType}>
+                    <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
+                    <SelectContent>
+                      {[
+                        "Plain water",
+                        "Warm water",
+                        "Lemon + Mint",
+                        "Tulsi + Ginger",
+                        "Cinnamon + Fennel",
+                        "Kokum + Cumin",
+                        "Cucumber + Hibiscus",
+                        "Jeera + Ajwain",
+                      ].map((t) => (
+                        <SelectItem key={t} value={t}>{t}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <Button onClick={addLog} className="rounded-2xl">Log drink</Button>
+                <Button variant="outline" onClick={resetDay} className="rounded-2xl">Reset day</Button>
+              </div>
+              <div className="flex items-center gap-3 pt-2">
+                <Switch checked={remind} onCheckedChange={setRemind} id="remind" />
+                <Label htmlFor="remind" className="flex items-center gap-2"><Bell className="w-4 h-4" /> Smart reminder</Label>
+                <Input className="w-28 ml-auto" type="number" value={remindEvery} onChange={(e) => setRemindEvery(e.target.value)} />
+                <span className="text-sm text-muted-foreground">min</span>
+              </div>
+            </div>
+            <div className="h-56">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={daySeries} margin={{ left: 5, right: 10, top: 10, bottom: 5 }}>
+                  <XAxis dataKey="time" tick={{ fontSize: 12 }} />
+                  <YAxis tick={{ fontSize: 12 }} />
+                  <Tooltip />
+                  <Legend />
+                  <Line type="monotone" dataKey="ml" stroke="#00bcd4" strokeWidth={2} dot={false} name="ml per hour" />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Daily goal</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          <Label className="text-xs">Set goal (ml)</Label>
+          <Input type="number" value={goal} onChange={(e) => setGoal(Number(e.target.value || 0))} />
+          <p className="text-xs text-muted-foreground">Tip: Start with 30–35 ml/kg/day; adjust for heat, activity, and medical advice.</p>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function InfusionsPanel() {
+  const [filter, setFilter] = useState("");
+  const list = useMemo(() => baseInfusions.filter((i) => (filter ? i.tags.includes(filter) : true)), [filter]);
+  const tags = Array.from(new Set(baseInfusions.flatMap((i) => i.tags)));
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-2 flex-wrap items-center">
+        <Badge variant="outline" className={`cursor-pointer ${!filter && "bg-muted"}`} onClick={() => setFilter("")}>All</Badge>
+        {tags.map((t) => (
+          <Badge key={t} variant="outline" className={`cursor-pointer ${filter === t && "bg-muted"}`} onClick={() => setFilter(t)}>{t}</Badge>
+        ))}
+      </div>
+      <div className="grid md:grid-cols-2 gap-4">
+        {list.map((i) => (
+          <Card key={i.id} className="rounded-2xl">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-between">
+                <span className="flex items-center gap-2"><FlaskConical className="w-5 h-5" /> {i.name}</span>
+                <div className="flex gap-2">{i.tags.map((t) => <Badge key={t} variant="secondary">{t}</Badge>)}</div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-sm space-y-2">
+              <div><span className="font-medium">When:</span> {i.when}</div>
+              <div><span className="font-medium">Method:</span> {i.method}</div>
+              <div><span className="font-medium">Benefits:</span> {i.benefits}</div>
+              <div className="text-xs text-muted-foreground">Caution: {i.cautions}</div>
+              <div className="h-36">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie dataKey="value" data={Object.entries(i.elements).map(([k,v]) => ({ name: k, value: v }))} innerRadius={35} outerRadius={60} paddingAngle={2}>
+                      {Object.keys(i.elements).map((_, idx) => (
+                        <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
+                      ))}
+                    </Pie>
+                    <Tooltip />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MixPanel() {
+  const [mix, setMix] = useLocalStorage(STORAGE_KEYS.tattva, defaultTattva);
+  const [symptoms, setSymptoms] = useState({ acidity: false, bloating: false, stress: false, fatigue: false, joint: false, insomnia: false, cold: false, heat: false });
+
+  const total = Object.values(mix).reduce((s, v) => s + v, 0) || 1;
+  const pct = Object.fromEntries(Object.entries(mix).map(([k, v]) => [k, Math.round((v / total) * 100)]));
+
+  const suggestion = useMemo(() => {
+    // Heuristic "AI" interpretation for educational guidance (non-medical)
+    let s = { ...mix };
+    // Normalize first
+    const norm = (obj) => {
+      const sum = Object.values(obj).reduce((a, b) => a + b, 0);
+      return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, (v / sum) * 100]));
+    };
+    // Rules
+    if (symptoms.acidity || symptoms.heat) { s.fire = Math.max(5, s.fire - 10); s.water += 6; s.space += 4; }
+    if (symptoms.bloating || symptoms.cold) { s.air = Math.max(5, s.air - 8); s.fire += 6; s.earth += 2; }
+    if (symptoms.stress || symptoms.insomnia) { s.space += 8; s.water += 4; }
+    if (symptoms.fatigue) { s.fire += 6; s.earth += 4; }
+    if (symptoms.joint) { s.earth += 6; s.water += 2; }
+
+    const out = norm(s);
+    // Pair with recipe ideas
+    let picks = ["Lemon + Mint", "Cucumber + Hibiscus"];
+    if (symptoms.acidity || symptoms.heat) picks = ["Kokum + Cumin", "Cucumber + Hibiscus"];
+    if (symptoms.bloating) picks = ["Jeera + Ajwain", "Lemon + Mint"];
+    if (symptoms.stress || symptoms.insomnia) picks = ["Tulsi + Ginger", "Cucumber + Hibiscus"];
+    if (symptoms.fatigue) picks = ["Cinnamon + Fennel", "Tulsi + Ginger"];
+    if (symptoms.joint) picks = ["Cinnamon + Fennel", "Jeera + Ajwain"];
+    return { out, picks };
+  }, [mix, symptoms]);
+
+  const chartData = useMemo(() =>
+    Object.entries(pct).map(([k, v]) => ({ name: k, value: v })), [pct]
+  );
+  const chartSuggest = useMemo(() =>
+    Object.entries(suggestion.out).map(([k, v]) => ({ name: k, value: Math.round(v) })), [suggestion]
+  );
+
+  const toggles = [
+    { key: "acidity", label: "Acidity/Reflux (cooling needed)" },
+    { key: "bloating", label: "Bloating/Gas (warming, carminative)" },
+    { key: "stress", label: "Stress/Anxiety (grounding/calm)" },
+    { key: "fatigue", label: "Fatigue/Low drive (metabolic spark)" },
+    { key: "joint", label: "Joint stiffness (lubrication/build)" },
+    { key: "insomnia", label: "Poor sleep (calm, cool)" },
+    { key: "cold", label: "Cold tendency (add warmth)" },
+    { key: "heat", label: "Heat tendency (add cooling)" },
+  ];
+
+  const setPart = (k, v) => {
+    const next = { ...mix, [k]: v };
+    const sumOthers = Object.keys(next).filter(x => x !== k).reduce((s, x) => s + next[x], 0);
+    // keep simple; allow any values – normalize in charts
+    setMix(next);
+  };
+
+  const healingScore = useMemo(() => {
+    // Simple score: closeness of suggestion to current mix + symptom coverage
+    const diff = Object.keys(mix).reduce((s, k) => s + Math.abs(chartSuggest.find((i)=>i.name===k)?.value - chartData.find((i)=>i.name===k)?.value), 0);
+    const coverage = Object.values(symptoms).filter(Boolean).length;
+    const base = Math.max(0, 100 - diff);
+    return Math.min(100, Math.round(base + coverage * 3));
+  }, [chartData, chartSuggest, symptoms, mix]);
+
+  return (
+    <div className="grid lg:grid-cols-3 gap-4">
+      <Card className="lg:col-span-2">
+        <CardHeader>
+          <CardTitle>Design your Panchatattva drink</CardTitle>
+        </CardHeader>
+        <CardContent className="grid md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            {Object.entries(mix).map(([k, v], idx) => (
+              <div key={k}>
+                <div className="flex items-center justify-between mb-1">
+                  <span className="capitalize font-medium flex items-center gap-2">
+                    {idx===0 && <Droplets className="w-4 h-4"/>}
+                    {idx===1 && <Brain className="w-4 h-4"/>}
+                    {idx===2 && <Leaf className="w-4 h-4"/>}
+                    {idx===3 && <Flame className="w-4 h-4"/>}
+                    {idx===4 && <Hourglass className="w-4 h-4"/>}
+                    {k}
+                  </span>
+                  <Badge variant="outline">{pct[k]}%</Badge>
+                </div>
+                <Slider value={[v]} min={5} max={60} step={1} onValueChange={(val) => setPart(k, val[0])} />
+              </div>
+            ))}
+          </div>
+          <div className="grid grid-rows-2 gap-4">
+            <div className="h-40 border rounded-xl p-2">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie dataKey="value" data={chartData} innerRadius={45} outerRadius={70} paddingAngle={2}>
+                    {chartData.map((_, idx) => <Cell key={idx} fill={COLORS[idx % COLORS.length]} />)}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="h-40 border rounded-xl p-2">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie dataKey="value" data={chartSuggest} innerRadius={45} outerRadius={70} paddingAngle={2}>
+                    {chartSuggest.map((_, idx) => <Cell key={idx} fill={COLORS[idx % COLORS.length]} />)}
+                  </Pie>
+                  <Tooltip />
+                  <Legend />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>AI interpretation</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3 text-sm">
+          <p>Select what you feel today; we’ll suggest a healing mix and 2 matching infusions.</p>
+          <div className="space-y-2">
+            {toggles.map((t) => (
+              <label key={t.key} className="flex items-center gap-3">
+                <Switch checked={symptoms[t.key]} onCheckedChange={(v) => setSymptoms({ ...symptoms, [t.key]: v })} />
+                <span>{t.label}</span>
+              </label>
+            ))}
+          </div>
+          <div className="pt-2">
+            <div className="text-xs text-muted-foreground">Suggested infusions</div>
+            <div className="flex gap-2 mt-1 flex-wrap">
+              {suggestion.picks.map((p) => <Badge key={p} variant="secondary" className="rounded-2xl">{p}</Badge>)}
+            </div>
+          </div>
+          <div className="pt-1">
+            <div className="text-xs text-muted-foreground mb-1">Healing alignment</div>
+            <Progress value={healingScore} />
+            <div className="text-xs text-muted-foreground mt-1">Score {healingScore}/100 – educational guidance, not medical advice.</div>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+function TestimonialsPanel() {
+  const items = [
+    {
+      name: "Aarav S.",
+      text: "Two weeks with Tattava and my afternoon slumps vanished. The cinnamon–fennel post‑lunch drink is a game‑changer!",
+      meta: "Entrepreneur, Bengaluru",
+      stars: 5,
+    },
+    {
+      name: "Megha R.",
+      text: "The hydration tracker made me realize I was under‑drinking. Skin feels calmer; reflux eased with kokum–cumin.",
+      meta: "New mom, Mysuru",
+      stars: 5,
+    },
+    {
+      name: "Dr. Prajjwal",
+      text: "Simple, safe, and structured. I recommend the morning warm‑water sips and Tulsi‑Ginger in monsoon.",
+      meta: "Physician, Hubballi",
+      stars: 4,
+    },
+  ];
+  return (
+    <div className="grid md:grid-cols-3 gap-4">
+      {items.map((t, i) => (
+        <Card key={i} className="rounded-2xl">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2"><Star className="w-4 h-4" /> {t.name}</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm space-y-2">
+            <p>“{t.text}”</p>
+            <div className="text-xs text-muted-foreground">{t.meta}</div>
+            <div className="flex gap-1 pt-1">
+              {Array.from({ length: t.stars }).map((_, idx) => <Star key={idx} className="w-4 h-4 fill-current" />)}
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-white to-sky-50">
+      <Header />
+      <main className="max-w-6xl mx-auto px-4 py-6">
+        <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+          <Card className="mb-5 rounded-2xl">
+            <CardContent className="pt-6 flex flex-col md:flex-row gap-5 items-center">
+              <div className="flex-1">
+                <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Hydrate smarter. Heal gently. Track effortlessly.</h2>
+                <p className="text-muted-foreground mt-2">
+                  Learn which infusions fit your day, track water easily, and balance the five elements with Tattava’s gentle AI guidance.
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Button className="rounded-2xl">Start Tracking</Button>
+                <Button variant="outline" className="rounded-2xl">Explore Infusions</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+        <Tabs defaultValue="learn" className="w-full">
+          <TabsList className="grid grid-cols-5 rounded-2xl">
+            <TabsTrigger value="learn">Learn</TabsTrigger>
+            <TabsTrigger value="tracker">Tracker</TabsTrigger>
+            <TabsTrigger value="infusions">Infusions</TabsTrigger>
+            <TabsTrigger value="mix">Panchatattva Mix</TabsTrigger>
+            <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
+          </TabsList>
+          <TabsContent value="learn" className="mt-4"><LearnPanel /></TabsContent>
+          <TabsContent value="tracker" className="mt-4"><TrackerPanel /></TabsContent>
+          <TabsContent value="infusions" className="mt-4"><InfusionsPanel /></TabsContent>
+          <TabsContent value="mix" className="mt-4"><MixPanel /></TabsContent>
+          <TabsContent value="testimonials" className="mt-4"><TestimonialsPanel /></TabsContent>
+        </Tabs>
+        <footer className="text-center text-xs text-muted-foreground mt-8">
+          Educational app. Not a substitute for professional medical advice. © {new Date().getFullYear()} Tattava
+        </footer>
+      </main>
+    </div>
+  );
+}

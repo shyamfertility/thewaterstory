@@ -34,42 +34,18 @@
 
   <main class="max-w-6xl mx-auto px-4 py-6">
     <!-- Hero -->
-    <section class="card p-0 overflow-hidden mb-6">
-      <div class="grid md:grid-cols-2">
-        <div class="p-6 lg:p-8 bg-gradient-to-br from-sky-100 via-emerald-50 to-white">
-          <div class="inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs uppercase tracking-wide text-sky-700">Holistic hydration</div>
-          <h2 class="text-3xl md:text-4xl font-bold tracking-tight mt-4 text-slate-900">Hydrate smarter. Heal gently. Track effortlessly.</h2>
-          <p class="text-slate-600 mt-3">Learn which infusions fit your day, track water easily, and balance the five elements with Tattava’s gentle AI guidance.</p>
-          <div class="flex flex-wrap gap-3 mt-6">
-            <a href="#tracker" class="px-5 py-2.5 rounded-2xl bg-sky-600 text-white shadow-sm shadow-sky-200">Start Tracking</a>
-            <a href="#infusions" class="px-5 py-2.5 rounded-2xl border border-slate-200 bg-white/80">Explore Infusions</a>
-          </div>
+    <section class="card p-6 mb-6">
+      <div class="flex flex-col md:flex-row gap-5 items-center">
+        <div class="flex-1">
+          <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Hydrate smarter. Heal gently. Track effortlessly.</h2>
+          <p class="text-slate-600 mt-2">Learn which infusions fit your day, track water easily, and balance the five elements with Tattava’s gentle AI guidance.</p>
         </div>
-        <div class="relative h-56 md:h-full">
-          <img src="https://images.unsplash.com/photo-1615485921500-65c622c010b1?auto=format&fit=crop&w=900&q=80" alt="Refreshing infused water with citrus and herbs" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-900/50 via-slate-900/10 to-transparent"></div>
-          <div class="absolute bottom-4 left-4 text-white text-sm max-w-xs leading-relaxed">
-            Free Unsplash imagery bringing calm, elemental energy to your ritual.
-          </div>
+        <div class="flex gap-3">
+          <a href="#tracker" class="px-4 py-2 rounded-2xl bg-sky-600 text-white">Start Tracking</a>
+          <a href="#infusions" class="px-4 py-2 rounded-2xl border">Explore Infusions</a>
         </div>
       </div>
     </section>
-
-    <!-- Highlight boxes -->
-    <div class="grid md:grid-cols-3 gap-4 mb-8">
-      <div class="rounded-2xl border border-sky-100 bg-sky-50/80 p-4 shadow-sm">
-        <div class="text-xs uppercase tracking-wide text-sky-600 mb-2">Daily ritual</div>
-        <p class="font-semibold text-slate-800">Plan your sips from sunrise to moonlight with mindful reminders.</p>
-      </div>
-      <div class="rounded-2xl border border-emerald-100 bg-emerald-50/80 p-4 shadow-sm">
-        <div class="text-xs uppercase tracking-wide text-emerald-600 mb-2">Elemental balance</div>
-        <p class="font-semibold text-slate-800">Adjust the Panchatattva mix visually until your body feels in harmony.</p>
-      </div>
-      <div class="rounded-2xl border border-amber-100 bg-amber-50/80 p-4 shadow-sm">
-        <div class="text-xs uppercase tracking-wide text-amber-600 mb-2">Curated infusions</div>
-        <p class="font-semibold text-slate-800">Discover botanicals paired with free imagery for quick inspiration.</p>
-      </div>
-    </div>
 
     <!-- Tabs -->
     <div class="card">
@@ -101,23 +77,23 @@
             <div class="card md:col-span-3 p-4">
               <h3 class="font-semibold mb-3 text-lg">Panchatattva – the five forces at a glance</h3>
               <div class="grid md:grid-cols-5 gap-3 text-sm">
-                <div class="p-4 rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 to-white">
+                <div class="p-3 rounded-xl border">
                   <div class="font-medium">Fire (Agni)</div>
                   <p class="text-slate-600">Transforms – metabolism, warmth, digestion.</p>
                 </div>
-                <div class="p-4 rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 to-white">
+                <div class="p-3 rounded-xl border">
                   <div class="font-medium">Water (Jal)</div>
                   <p class="text-slate-600">Flows – hydration, lymph, skin glow.</p>
                 </div>
-                <div class="p-4 rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 to-white">
+                <div class="p-3 rounded-xl border">
                   <div class="font-medium">Earth (Prithvi)</div>
                   <p class="text-slate-600">Builds – stability, joints, tissues.</p>
                 </div>
-                <div class="p-4 rounded-2xl border border-amber-100 bg-gradient-to-br from-amber-50 to-white">
+                <div class="p-3 rounded-xl border">
                   <div class="font-medium">Air (Vayu)</div>
                   <p class="text-slate-600">Moves – breath, circulation, nerve tone.</p>
                 </div>
-                <div class="p-4 rounded-2xl border border-purple-100 bg-gradient-to-br from-purple-50 to-white">
+                <div class="p-3 rounded-xl border">
                   <div class="font-medium">Space (Akasha)</div>
                   <p class="text-slate-600">Holds – calm, clarity, lightness.</p>
                 </div>
@@ -237,13 +213,6 @@
                 <div class="text-xs text-slate-500">Suggested infusions</div>
                 <div id="suggestPills" class="flex gap-2 mt-1 flex-wrap"></div>
               </div>
-              <div class="space-y-3 mt-4">
-                <div id="interpretBox" class="rounded-2xl border border-emerald-100 bg-emerald-50/80 p-3 text-sm leading-relaxed text-emerald-900">Tick a checkbox to receive a personalised AI note on your hydration focus.</div>
-                <div id="mixBox" class="rounded-2xl border border-sky-100 bg-sky-50/80 p-3 text-sm text-slate-700">
-                  <div class="font-semibold text-sky-700">Recommended mix focus</div>
-                  <div id="mixBreakdown" class="flex flex-wrap gap-2 mt-2 text-xs"></div>
-                </div>
-              </div>
               <div class="pt-3">
                 <div class="text-xs text-slate-500 mb-1">Healing alignment</div>
                 <div class="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
@@ -270,72 +239,12 @@
 const STORAGE = { goal: 'tattava_goal_ml', logs: 'tattava_logs', remind: 'tattava_remind_on', remindEvery: 'tattava_remind_every', mix: 'tattava_mix', symptoms: 'tattava_symptoms' };
 const defaultMix = { water: 35, air: 15, earth: 20, fire: 20, space: 10 };
 const baseInfusions = [
-  {
-    id:'lemon-mint',
-    name:'Lemon + Mint',
-    image:'https://images.unsplash.com/photo-1461354464878-ad92f492a5a0?auto=format&fit=crop&w=800&q=80',
-    tags:['Detox','Bloat relief','Vitamin C'],
-    when:'Morning, post-meal',
-    method:'4 lemon slices + 8 mint leaves in 1L cool water; infuse 30–45 min.',
-    cautions:'Avoid if severe GERD or citrus sensitivity.',
-    benefits:'Hydration boost, supports bile flow, light digestive aid.',
-    elements:{ water:30, air:15, earth:10, fire:25, space:20 }
-  },
-  {
-    id:'tulsi-ginger',
-    name:'Tulsi + Ginger',
-    image:'https://images.unsplash.com/photo-1487720158108-efd0873e1b99?auto=format&fit=crop&w=800&q=80',
-    tags:['Immune','Anti-nausea','Warmth'],
-    when:'Rainy days, travel, morning sip',
-    method:'6 tulsi leaves + 6 ginger slices in 750 ml warm water; infuse 20 min.',
-    cautions:'Limit in first trimester, watch if on anticoagulants.',
-    benefits:'Soothes throat, eases nausea, warms digestion.',
-    elements:{ water:15, air:10, earth:10, fire:45, space:20 }
-  },
-  {
-    id:'cinnamon-fennel',
-    name:'Cinnamon + Fennel',
-    image:'https://images.unsplash.com/photo-1478749485505-2a903a729c63?auto=format&fit=crop&w=800&q=80',
-    tags:['Metabolic','Sugar balance','After meals'],
-    when:'After heavy meals',
-    method:'1 small stick cinnamon + 1 tsp lightly crushed fennel in 1L warm water; infuse 30 min.',
-    cautions:'Moderate if on hypoglycemics; avoid excess in pregnancy.',
-    benefits:'Supports post‑meal glucose and eases heaviness.',
-    elements:{ water:20, air:10, earth:20, fire:35, space:15 }
-  },
-  {
-    id:'kokum-cumin',
-    name:'Kokum + Cumin',
-    image:'https://images.unsplash.com/photo-1601412436009-d964bd02edbc?auto=format&fit=crop&w=800&q=80',
-    tags:['Cooling','Acidity relief','Electrolytes'],
-    when:'Hot days, after spicy food',
-    method:'3 kokum petals (soaked) + 1/2 tsp roasted cumin crushed in 1L cool water; infuse 45 min.',
-    cautions:'Watch if hypotensive; kokum is sour.',
-    benefits:'Cools Pitta, calms reflux, light electrolyte support.',
-    elements:{ water:35, air:10, earth:15, fire:15, space:25 }
-  },
-  {
-    id:'cucumber-hibiscus',
-    name:'Cucumber + Hibiscus',
-    image:'https://images.unsplash.com/photo-1497534446932-c925b458314e?auto=format&fit=crop&w=800&q=80',
-    tags:['BP friendly','Skin glow','Antioxidant'],
-    when:'Afternoon',
-    method:'8 cucumber rounds + 2 dried hibiscus petals in 1L cool water; infuse 30–45 min.',
-    cautions:'Hibiscus may lower BP; avoid with low BP.',
-    benefits:'Gentle diuretic, skin hydration, anthocyanins.',
-    elements:{ water:40, air:10, earth:20, fire:10, space:20 }
-  },
-  {
-    id:'jeera-ajwain',
-    name:'Jeera + Ajwain',
-    image:'https://images.unsplash.com/photo-1493770348161-369560ae357d?auto=format&fit=crop&w=800&q=80',
-    tags:['Bloat','Gas relief','Post‑meal'],
-    when:'Post‑meal, travel',
-    method:'1/2 tsp jeera + 1/4 tsp ajwain lightly crushed; steep in 800 ml warm water for 15–20 min.',
-    cautions:'Strong taste; reduce if mouth dryness.',
-    benefits:'Relieves gas, enhances motility.',
-    elements:{ water:20, air:20, earth:15, fire:35, space:10 }
-  }
+  { id:'lemon-mint', name:'Lemon + Mint', tags:['Detox','Bloat relief','Vitamin C'], when:'Morning, post-meal', method:'4 lemon slices + 8 mint leaves in 1L cool water; infuse 30–45 min.', cautions:'Avoid if severe GERD or citrus sensitivity.', benefits:'Hydration boost, supports bile flow, light digestive aid.', elements:{ water:30, air:15, earth:10, fire:25, space:20 } },
+  { id:'tulsi-ginger', name:'Tulsi + Ginger', tags:['Immune','Anti-nausea','Warmth'], when:'Rainy days, travel, morning sip', method:'6 tulsi leaves + 6 ginger slices in 750 ml warm water; infuse 20 min.', cautions:'Limit in first trimester, watch if on anticoagulants.', benefits:'Soothes throat, eases nausea, warms digestion.', elements:{ water:15, air:10, earth:10, fire:45, space:20 } },
+  { id:'cinnamon-fennel', name:'Cinnamon + Fennel', tags:['Metabolic','Sugar balance','After meals'], when:'After heavy meals', method:'1 small stick cinnamon + 1 tsp lightly crushed fennel in 1L warm water; infuse 30 min.', cautions:'Moderate if on hypoglycemics; avoid excess in pregnancy.', benefits:'Supports post‑meal glucose and eases heaviness.', elements:{ water:20, air:10, earth:20, fire:35, space:15 } },
+  { id:'kokum-cumin', name:'Kokum + Cumin', tags:['Cooling','Acidity relief','Electrolytes'], when:'Hot days, after spicy food', method:'3 kokum petals (soaked) + 1/2 tsp roasted cumin crushed in 1L cool water; infuse 45 min.', cautions:'Watch if hypotensive; kokum is sour.', benefits:'Cools Pitta, calms reflux, light electrolyte support.', elements:{ water:35, air:10, earth:15, fire:15, space:25 } },
+  { id:'cucumber-hibiscus', name:'Cucumber + Hibiscus', tags:['BP friendly','Skin glow','Antioxidant'], when:'Afternoon', method:'8 cucumber rounds + 2 dried hibiscus petals in 1L cool water; infuse 30–45 min.', cautions:'Hibiscus may lower BP; avoid with low BP.', benefits:'Gentle diuretic, skin hydration, anthocyanins.', elements:{ water:40, air:10, earth:20, fire:10, space:20 } },
+  { id:'jeera-ajwain', name:'Jeera + Ajwain', tags:['Bloat','Gas relief','Post‑meal'], when:'Post‑meal, travel', method:'1/2 tsp jeera + 1/4 tsp ajwain lightly crushed; steep in 800 ml warm water for 15–20 min.', cautions:'Strong taste; reduce if mouth dryness.', benefits:'Relieves gas, enhances motility.', elements:{ water:20, air:20, earth:15, fire:35, space:10 } }
 ];
 const testimonials = [
   { name:'Aarav S.', text:'Two weeks with Tattava and my afternoon slumps vanished. The cinnamon–fennel post‑lunch drink is a game‑changer!', meta:'Entrepreneur, Bengaluru', stars:5 },
@@ -453,23 +362,17 @@ function renderInfusions(){
   const list = baseInfusions.filter(i=> currentFilter ? i.tags.includes(currentFilter) : true);
   list.forEach(i=>{
     const card = document.createElement('div');
-    card.className = 'card overflow-hidden';
+    card.className = 'card p-4';
     card.innerHTML = `
-      <div class="relative h-40">
-        <img src="${i.image}" alt="${i.name}" class="absolute inset-0 w-full h-full object-cover" loading="lazy" />
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/10 to-transparent"></div>
-        <div class="absolute bottom-3 left-3 right-3 flex justify-between items-end text-white">
-          <h4 class="font-semibold text-lg">${i.name}</h4>
-          <div class="flex gap-1 flex-wrap text-xs">${i.tags.map(t=>`<span class='px-2 py-0.5 rounded-full bg-white/30 backdrop-blur'>${t}</span>`).join('')}</div>
-        </div>
+      <div class="flex items-start justify-between mb-2">
+        <h4 class="font-semibold text-lg">${i.name}</h4>
+        <div class="flex gap-1 flex-wrap">${i.tags.map(t=>`<span class='chip'>${t}</span>`).join('')}</div>
       </div>
-      <div class="p-4 space-y-2 bg-gradient-to-br from-white via-sky-50/40 to-white">
-        <div class="text-sm"><span class="font-medium">When:</span> ${i.when}</div>
-        <div class="text-sm"><span class="font-medium">Method:</span> ${i.method}</div>
-        <div class="text-sm"><span class="font-medium">Benefits:</span> ${i.benefits}</div>
-        <div class="text-xs text-slate-500">Caution: ${i.cautions}</div>
-        <div class="h-36 mt-2"><canvas id="pie-${i.id}"></canvas></div>
-      </div>
+      <div class="text-sm"><span class="font-medium">When:</span> ${i.when}</div>
+      <div class="text-sm"><span class="font-medium">Method:</span> ${i.method}</div>
+      <div class="text-sm"><span class="font-medium">Benefits:</span> ${i.benefits}</div>
+      <div class="text-xs text-slate-500 mb-2">Caution: ${i.cautions}</div>
+      <div class="h-36"><canvas id="pie-${i.id}"></canvas></div>
     `;
     infusionGrid.appendChild(card);
     // Chart
@@ -499,8 +402,6 @@ const suggestCtx = document.getElementById('suggestChart').getContext('2d');
 const suggestPills = document.getElementById('suggestPills');
 const healBar = document.getElementById('healBar');
 const healText = document.getElementById('healText');
-const interpretBox = document.getElementById('interpretBox');
-const mixBreakdown = document.getElementById('mixBreakdown');
 
 let mixChart, suggestChart;
 
@@ -522,29 +423,7 @@ function suggestFrom(mix, sym){
   if(sym.stress || sym.insomnia) picks = ['Tulsi + Ginger','Cucumber + Hibiscus'];
   if(sym.fatigue) picks = ['Cinnamon + Fennel','Tulsi + Ginger'];
   if(sym.joint) picks = ['Cinnamon + Fennel','Jeera + Ajwain'];
-  if(sym.cold) picks = ['Tulsi + Ginger','Jeera + Ajwain'];
   return { p, picks };
-}
-
-function interpretTextFrom(sym, picks){
-  const notes = [];
-  if(sym.acidity || sym.heat) notes.push('Cool inflammation with water-rich fruits (kokum, cucumber) and airy herbs that settle reflux.');
-  if(sym.bloating) notes.push('Choose digestive carminatives like jeera and ajwain to nudge the air element into flow.');
-  if(sym.cold) notes.push('Bring in gentle warmth through ginger or ajwain to spark Agni without drying you out.');
-  if(sym.stress || sym.insomnia) notes.push('Space element tonics such as tulsi and hibiscus encourage calm and restful breath.');
-  if(sym.fatigue) notes.push('Layer cinnamon or tulsi for metabolic spark while keeping hydration steady.');
-  if(sym.joint) notes.push('Earthy seeds and slightly unctuous infusions can comfort joints and connective tissues.');
-  const active = Object.values(sym).some(Boolean);
-  if(!active){
-    return `You’re in balance today. Rotate ${picks.join(' & ')} to keep all elements nourished.`;
-  }
-  return `${notes.join(' ')} Try ${picks.join(' & ')} to align with today’s signals.`;
-}
-
-function mixSummary(p){
-  return Object.entries(p)
-    .map(([k,v])=>`<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-white/70 border border-sky-100 text-sky-700 capitalize">${k} <span class="font-semibold">${v}%</span></span>`)
-    .join('');
 }
 
 function buildSliders(){
@@ -603,8 +482,6 @@ function renderSuggest(){
   if(suggestChart) suggestChart.destroy();
   suggestChart = new Chart(suggestCtx, { type:'doughnut', data:{ labels, datasets:[{ data:vals }] }, options:{ plugins:{ legend:{ position:'bottom' } } } });
   suggestPills.innerHTML = s.picks.map(p=>`<span class='chip'>${p}</span>`).join('');
-  interpretBox.textContent = interpretTextFrom(symptomState, s.picks);
-  mixBreakdown.innerHTML = mixSummary(s.p);
 }
 function renderHealing(){
   // simple: diff between charts + symptom coverage
@@ -639,6 +516,76 @@ function renderTestimonials(){
   `).join('');
 }
 renderTestimonials();
+  <script>
+// Thumbnails for infusions (emoji-based)
+function thumbFor(id){
+  switch(id){
+    case 'lemon-mint': return '🍋🌿';
+    case 'tulsi-ginger': return '🌿🫚';
+    case 'cinnamon-fennel': return '🌿🪵';
+    case 'kokum-cumin': return '🫐✨';
+    case 'cucumber-hibiscus': return '🥒🌺';
+    case 'jeera-ajwain': return '🌱✨';
+    default: return '💧';
+  }
+}
+
+// Enhanced infusion cards with colorful header + thumb
+function renderInfusions(){
+  infusionGrid.innerHTML = '';
+  const list = baseInfusions.filter(i => currentFilter ? i.tags.includes(currentFilter) : true);
+  list.forEach((i, idx) => {
+    const card = document.createElement('div');
+    card.className = 'card overflow-hidden';
+    const colors = ['from-rose-100 to-rose-50','from-sky-100 to-sky-50','from-amber-100 to-amber-50','from-emerald-100 to-emerald-50','from-indigo-100 to-indigo-50','from-fuchsia-100 to-fuchsia-50'];
+    const head = document.createElement('div');
+    head.className = `bg-gradient-to-r ${colors[idx % colors.length]} p-3 flex items-center justify-between`;
+    head.innerHTML = `
+      <div class="flex items-center gap-2">
+        <div class="w-9 h-9 rounded-full bg-white/70 flex items-center justify-center text-lg">${thumbFor(i.id)}</div>
+        <div>
+          <div class="text-sm font-semibold">${i.name}</div>
+          <div class="text-[11px] text-slate-600">${i.tags.join(' • ')}</div>
+        </div>
+      </div>`;
+    card.appendChild(head);
+
+    const body = document.createElement('div');
+    body.className = 'p-4';
+    body.innerHTML = `
+      <div class="text-sm"><span class="font-medium">When:</span> ${i.when}</div>
+      <div class="text-sm"><span class="font-medium">Method:</span> ${i.method}</div>
+      <div class="text-sm"><span class="font-medium">Benefits:</span> ${i.benefits}</div>
+      <div class="text-xs text-slate-500 mb-2">Caution: ${i.cautions}</div>
+      <div class="h-36"><canvas id="pie-${i.id}"></canvas></div>`;
+    card.appendChild(body);
+    infusionGrid.appendChild(card);
+
+    const ctx = body.querySelector(`#pie-${i.id}`).getContext('2d');
+    const data = Object.entries(i.elements).map(([k,v])=>({k,v}));
+    new Chart(ctx, { type:'pie',
+      data:{ labels:data.map(d=>d.k), datasets:[{ data:data.map(d=>d.v) }] },
+      options:{ plugins:{ legend:{ position:'bottom' } } } });
+  });
+}
+renderInfusions();
+
+// Rotating taglines under hero
+(function(){
+  const lines = [
+    'Drink with intention. Heal with nature.',
+    'Water. The forgotten medicine.',
+    'Tattava – Redefining Hydration, Restoring Health.',
+    'Because your body remembers what pure water feels like.',
+    'Every drop a cure. Every sip a balance.'
+  ];
+  const rotEl = document.getElementById('taglineRotator');
+  if(!rotEl) return;
+  let i = 0;
+  function tick(){ rotEl.textContent = '“' + lines[i] + '”'; i = (i + 1) % lines.length; }
+  tick(); setInterval(tick, 3500);
+})();
+</script>
 </script>
 </body>
 </html>

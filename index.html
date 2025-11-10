@@ -8,9 +8,17 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    .tab-active{ @apply bg-sky-100 text-sky-900; }
-    .chip{ @apply inline-flex items-center px-2 py-1 rounded-full text-xs border mr-1 mb-1; }
+    .tab-active{ @apply bg-sky-100 text-sky-900 ring-2 ring-sky-300; }
+    .chip{ @apply inline-flex items-center px-2 py-1 rounded-full text-xs border mr-1 mb-1 bg-slate-50; }
     .card{ @apply bg-white rounded-2xl shadow-sm border; }
+    /* Section accents */
+    .learn-accent .card{ border-color:#67e8f9; }
+    .tracker-accent .card{ border-color:#7dd3fc; }
+    .infusions-accent .card{ border-color:#6ee7b7; }
+    .mix-accent .card{ border-color:#fcd34d; }
+    .testi-accent .card{ border-color:#c4b5fd; }
+    /* Headline gradient */
+    .headline{ @apply bg-clip-text text-transparent; background-image: linear-gradient(90deg,#0284c7,#22c55e,#f59e0b,#8b5cf6); }
   </style>
 </head>
 <body class="min-h-screen bg-gradient-to-b from-white to-sky-50 text-slate-800">
@@ -35,14 +43,33 @@
   <main class="max-w-6xl mx-auto px-4 py-6">
     <!-- Hero -->
     <section class="card p-6 mb-6">
-      <div class="flex flex-col md:flex-row gap-5 items-center">
-        <div class="flex-1">
-          <h2 class="text-2xl md:text-3xl font-bold tracking-tight">Hydrate smarter. Heal gently. Track effortlessly.</h2>
-          <p class="text-slate-600 mt-2">Learn which infusions fit your day, track water easily, and balance the five elements with Tattava’s gentle AI guidance.</p>
+      <div class="flex flex-col gap-6">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight headline">Before medicine existed, there was water. Before science named it H₂O, our ancestors called it <span class='underline decoration-sky-300'>Amrit</span> — the elixir of life.</h2>
+          <p class="text-slate-700 mt-3">Every drop carries a secret — a vibration, a rhythm, a memory. It flows through rivers, clouds, and bodies — connecting everything that lives. But somewhere, we forgot how to drink it. We gulped it in haste, stored it in plastic, and lost touch with its rhythm. And with that, our vitality faded.</p>
+          <p class="text-slate-700 mt-2">Dehydration became the silent root of our fatigue, our acidity, our inflammation, our imbalance. But nature never abandons its truth — it simply waits for us to remember.</p>
         </div>
-        <div class="flex gap-3">
-          <a href="#tracker" class="px-4 py-2 rounded-2xl bg-sky-600 text-white">Start Tracking</a>
-          <a href="#infusions" class="px-4 py-2 rounded-2xl border">Explore Infusions</a>
+        <div class="grid md:grid-cols-2 gap-5">
+          <div class="p-4 rounded-xl bg-gradient-to-br from-sky-50 to-sky-100 border border-sky-200">
+            <h3 class="font-semibold text-lg">Welcome to <span class="text-sky-700">Tattava — The Water Story</span></h3>
+            <p class="text-sm mt-1">A revolution that begins not in factories, but in the philosophy of balance. We bring back the ancient science of <span class="font-semibold">Jal Chikitsa</span> — the art of healing through mindful hydration. Because water, when taken in the right proportion, temperature, and time, is not just hydration… <span class="font-semibold">it is medicine</span>.</p>
+          </div>
+          <div class="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200">
+            <h3 class="font-semibold text-lg">Hydrate with intention</h3>
+            <p class="text-sm mt-1">Tattava redefines drinking — aligning the five elements within your body, cleansing your cells, awakening your energy, and restoring what modern life has diluted — your natural balance. This is more than a brand. It’s a movement. A return to what is pure, intentional, and alive.</p>
+          </div>
+        </div>
+        <div class="flex flex-col md:flex-row items-center gap-3">
+          <a href="#tracker" class="px-5 py-2.5 rounded-2xl bg-sky-600 text-white flex items-center gap-2"><span>💧</span> Start Tracking</a>
+          <a href="#infusions" class="px-5 py-2.5 rounded-2xl border flex items-center gap-2"><span>🧪</span> Explore Infusions</a>
+          <div class="text-xs text-slate-600 md:ml-auto">Every sip is sacred. Every moment, a choice. Drink consciously, live fully, heal naturally.</div>
+        </div>
+        <div class="grid md:grid-cols-5 gap-2 text-sm">
+          <div class="chip bg-sky-50">“Drink with intention. Heal with nature.”</div>
+          <div class="chip bg-emerald-50">“Water. The forgotten medicine.”</div>
+          <div class="chip bg-amber-50">“Tattava – Redefining Hydration, Restoring Health.”</div>
+          <div class="chip bg-violet-50">“Because your body remembers what pure water feels like.”</div>
+          <div class="chip bg-rose-50">“Every drop a cure. Every sip a balance.”</div>
         </div>
       </div>
     </section>
@@ -59,10 +86,10 @@
 
       <div class="p-4 space-y-6">
         <!-- Learn -->
-        <section data-panel="learn" class="tab-panel">
+        <section data-panel="learn" class="tab-panel learn-accent">
           <div class="grid md:grid-cols-3 gap-4">
             <div class="card md:col-span-2 p-4">
-              <h3 class="font-semibold mb-2 text-lg">Why water – and why infused?</h3>
+              <h3 class="font-semibold mb-2 text-lg">💠 Why water – and why infused?</h3>
               <p class="text-sm text-slate-700 mb-2">Tattava blends science and traditional wisdom: the right water, infused with targeted botanicals, supports your body’s natural rhythms. Choose infusions by season, symptom, and goal; track your intake; and balance the five elements.</p>
               <ul class="list-disc text-sm pl-5 space-y-1">
                 <li>Hydration is not just volume – it’s timing, temperature, and trace phytonutrients.</li>
@@ -71,11 +98,11 @@
               </ul>
             </div>
             <div class="card p-4">
-              <h3 class="font-semibold mb-2 text-lg">Safety</h3>
+              <h3 class="font-semibold mb-2 text-lg">🛡️ Safety</h3>
               <p class="text-sm">Pregnant, nursing, or on medication? Consult your clinician before strong herbs/spices. Start mild; observe your body. Avoid infusions that aggravate reflux, allergies, or interact with medicines. Hydration complements, not replaces, therapy.</p>
             </div>
             <div class="card md:col-span-3 p-4">
-              <h3 class="font-semibold mb-3 text-lg">Panchatattva – the five forces at a glance</h3>
+              <h3 class="font-semibold mb-3 text-lg">🪷 Panchatattva – the five forces at a glance</h3>
               <div class="grid md:grid-cols-5 gap-3 text-sm">
                 <div class="p-3 rounded-xl border">
                   <div class="font-medium">Fire (Agni)</div>
@@ -103,10 +130,10 @@
         </section>
 
         <!-- Tracker -->
-        <section data-panel="tracker" class="tab-panel hidden">
+        <section data-panel="tracker" class="tab-panel hidden tracker-accent">
           <div class="grid md:grid-cols-3 gap-4">
             <div class="card md:col-span-2 p-4">
-              <h3 class="font-semibold mb-3 text-lg">Water intake tracker</h3>
+              <h3 class="font-semibold mb-3 text-lg">💧 Water intake tracker</h3>
               <div class="grid sm:grid-cols-2 gap-4">
                 <div class="space-y-3">
                   <div class="flex items-center justify-between">
@@ -159,7 +186,7 @@
               </div>
             </div>
             <div class="card p-4">
-              <h3 class="font-semibold mb-3 text-lg">Daily goal</h3>
+              <h3 class="font-semibold mb-3 text-lg">🎯 Daily goal</h3>
               <label class="text-xs">Set goal (ml)</label>
               <input id="goalInput" type="number" value="2500" class="mt-1 w-full border rounded-lg px-2 py-1" />
               <p class="text-xs text-slate-600 mt-2">Tip: Start with 30–35 ml/kg/day; adjust for heat, activity, and medical advice.</p>
@@ -168,9 +195,9 @@
         </section>
 
         <!-- Infusions -->
-        <section data-panel="infusions" class="tab-panel hidden">
+        <section data-panel="infusions" class="tab-panel hidden infusions-accent">
           <div class="space-y-4">
-            <div class="flex flex-wrap gap-2 items-center">
+            <div class="flex flex-wrap gap-2 items-center"><span class="text-xs text-slate-500 mr-2">Filter by benefit:</span>
               <span class="chip cursor-pointer" data-filter="">All</span>
               <span class="chip cursor-pointer" data-filter="Detox">Detox</span>
               <span class="chip cursor-pointer" data-filter="Bloat relief">Bloat relief</span>
@@ -193,10 +220,10 @@
         </section>
 
         <!-- Mix -->
-        <section data-panel="mix" class="tab-panel hidden">
+        <section data-panel="mix" class="tab-panel hidden mix-accent">
           <div class="grid lg:grid-cols-3 gap-4">
             <div class="card lg:col-span-2 p-4">
-              <h3 class="font-semibold mb-3 text-lg">Design your Panchatattva drink</h3>
+              <h3 class="font-semibold mb-3 text-lg">🌀 Design your Panchatattva drink</h3>
               <div class="grid md:grid-cols-2 gap-6">
                 <div id="sliders" class="space-y-4"></div>
                 <div class="grid grid-rows-2 gap-4">
@@ -206,7 +233,7 @@
               </div>
             </div>
             <div class="card p-4">
-              <h3 class="font-semibold mb-3 text-lg">AI interpretation</h3>
+              <h3 class="font-semibold mb-3 text-lg">🤖 AI interpretation</h3>
               <p class="text-sm">Select what you feel today; we’ll suggest a healing mix and 2 matching infusions.</p>
               <div id="symptoms" class="space-y-2 mt-2"></div>
               <div class="pt-3">
@@ -225,13 +252,13 @@
         </section>
 
         <!-- Testimonials -->
-        <section data-panel="testimonials" class="tab-panel hidden">
+        <section data-panel="testimonials" class="tab-panel hidden testi-accent">
           <div class="grid md:grid-cols-3 gap-4" id="testiGrid"></div>
         </section>
       </div>
     </div>
 
-    <footer class="text-center text-xs text-slate-500 mt-8">Educational app. Not a substitute for professional medical advice. © <span id="year"></span> Tattava</footer>
+    <footer class="text-center text-xs text-slate-500 mt-8">Educational app. Not a substitute for professional medical advice. • <span class="italic">Tattava – Where Every Drop Tells a Story.</span> © <span id="year"></span> Tattava</footer>
   </main>
 
 <script>
@@ -365,6 +392,7 @@ function renderInfusions(){
     card.className = 'card p-4';
     card.innerHTML = `
       <div class="flex items-start justify-between mb-2">
+        <div class="w-28 h-16 mr-3 thumb shrink-0"></div>
         <h4 class="font-semibold text-lg">${i.name}</h4>
         <div class="flex gap-1 flex-wrap">${i.tags.map(t=>`<span class='chip'>${t}</span>`).join('')}</div>
       </div>
@@ -375,6 +403,20 @@ function renderInfusions(){
       <div class="h-36"><canvas id="pie-${i.id}"></canvas></div>
     `;
     infusionGrid.appendChild(card);
+    // Decorative thumbnail
+    const thumb = card.querySelector('.thumb');
+    if(thumb){ thumb.innerHTML = `<svg viewBox='0 0 120 70' class='w-full h-full rounded-xl'>
+      <defs>
+        <linearGradient id='g${i.id}' x1='0' x2='1'>
+          <stop offset='0%' stop-color='#7dd3fc'/>
+          <stop offset='100%' stop-color='#6ee7b7'/>
+        </linearGradient>
+      </defs>
+      <rect x='0' y='0' width='120' height='70' rx='12' fill='url(#g${i.id})'/>
+      <circle cx='30' cy='35' r='10' fill='white' fill-opacity='0.7'/>
+      <circle cx='55' cy='35' r='8' fill='white' fill-opacity='0.6'/>
+      <circle cx='78' cy='35' r='6' fill='white' fill-opacity='0.5'/>
+    </svg>`; }
     // Chart
     const ctx = card.querySelector(`#pie-${i.id}`).getContext('2d');
     const data = Object.entries(i.elements).map(([k,v])=>({k,v}));
@@ -516,76 +558,6 @@ function renderTestimonials(){
   `).join('');
 }
 renderTestimonials();
-  <script>
-// Thumbnails for infusions (emoji-based)
-function thumbFor(id){
-  switch(id){
-    case 'lemon-mint': return '🍋🌿';
-    case 'tulsi-ginger': return '🌿🫚';
-    case 'cinnamon-fennel': return '🌿🪵';
-    case 'kokum-cumin': return '🫐✨';
-    case 'cucumber-hibiscus': return '🥒🌺';
-    case 'jeera-ajwain': return '🌱✨';
-    default: return '💧';
-  }
-}
-
-// Enhanced infusion cards with colorful header + thumb
-function renderInfusions(){
-  infusionGrid.innerHTML = '';
-  const list = baseInfusions.filter(i => currentFilter ? i.tags.includes(currentFilter) : true);
-  list.forEach((i, idx) => {
-    const card = document.createElement('div');
-    card.className = 'card overflow-hidden';
-    const colors = ['from-rose-100 to-rose-50','from-sky-100 to-sky-50','from-amber-100 to-amber-50','from-emerald-100 to-emerald-50','from-indigo-100 to-indigo-50','from-fuchsia-100 to-fuchsia-50'];
-    const head = document.createElement('div');
-    head.className = `bg-gradient-to-r ${colors[idx % colors.length]} p-3 flex items-center justify-between`;
-    head.innerHTML = `
-      <div class="flex items-center gap-2">
-        <div class="w-9 h-9 rounded-full bg-white/70 flex items-center justify-center text-lg">${thumbFor(i.id)}</div>
-        <div>
-          <div class="text-sm font-semibold">${i.name}</div>
-          <div class="text-[11px] text-slate-600">${i.tags.join(' • ')}</div>
-        </div>
-      </div>`;
-    card.appendChild(head);
-
-    const body = document.createElement('div');
-    body.className = 'p-4';
-    body.innerHTML = `
-      <div class="text-sm"><span class="font-medium">When:</span> ${i.when}</div>
-      <div class="text-sm"><span class="font-medium">Method:</span> ${i.method}</div>
-      <div class="text-sm"><span class="font-medium">Benefits:</span> ${i.benefits}</div>
-      <div class="text-xs text-slate-500 mb-2">Caution: ${i.cautions}</div>
-      <div class="h-36"><canvas id="pie-${i.id}"></canvas></div>`;
-    card.appendChild(body);
-    infusionGrid.appendChild(card);
-
-    const ctx = body.querySelector(`#pie-${i.id}`).getContext('2d');
-    const data = Object.entries(i.elements).map(([k,v])=>({k,v}));
-    new Chart(ctx, { type:'pie',
-      data:{ labels:data.map(d=>d.k), datasets:[{ data:data.map(d=>d.v) }] },
-      options:{ plugins:{ legend:{ position:'bottom' } } } });
-  });
-}
-renderInfusions();
-
-// Rotating taglines under hero
-(function(){
-  const lines = [
-    'Drink with intention. Heal with nature.',
-    'Water. The forgotten medicine.',
-    'Tattava – Redefining Hydration, Restoring Health.',
-    'Because your body remembers what pure water feels like.',
-    'Every drop a cure. Every sip a balance.'
-  ];
-  const rotEl = document.getElementById('taglineRotator');
-  if(!rotEl) return;
-  let i = 0;
-  function tick(){ rotEl.textContent = '“' + lines[i] + '”'; i = (i + 1) % lines.length; }
-  tick(); setInterval(tick, 3500);
-})();
-</script>
 </script>
 </body>
 </html>
